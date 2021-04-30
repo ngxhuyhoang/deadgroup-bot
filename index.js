@@ -1,7 +1,7 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const Client = require("./client/Client");
-const { prefix, token } = require("./config.json");
+// const { prefix, token } = require("./config.json");
 
 const client = new Client();
 client.commands = new Discord.Collection();
@@ -29,6 +29,8 @@ client.once("disconnect", () => {
   console.log("Disconnect!");
 });
 
+const prefix = "$";
+
 client.on("message", async (message) => {
   const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -49,4 +51,4 @@ client.on("message", async (message) => {
   }
 });
 
-client.login(token);
+client.login("ODEwNDA2NjQyNzUxMjQyMjUw.YCjMAA.Z_N7cKYUq7O2Eep-CeR2JhmTyDc");
