@@ -6,6 +6,8 @@ const Client = require("./client/Client");
 const client = new Client();
 client.commands = new Discord.Collection();
 
+const prefix = "$";
+
 const commandFiles = fs
   .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
@@ -29,8 +31,6 @@ client.once("disconnect", () => {
   console.log("Disconnect!");
 });
 
-const prefix = "$";
-
 client.on("message", async (message) => {
   const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -51,4 +51,4 @@ client.on("message", async (message) => {
   }
 });
 
-client.login("ODEwNDA2NjQyNzUxMjQyMjUw.YCjMAA.Z_N7cKYUq7O2Eep-CeR2JhmTyDc");
+client.login("ODEwNDA2NjQyNzUxMjQyMjUw.YCjMAA.0qaLcK_j4BLm_uytTIJgGfkd_Ug");
