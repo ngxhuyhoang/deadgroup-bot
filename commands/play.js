@@ -9,13 +9,9 @@ module.exports = {
       const queue = message.client.queue;
       const serverQueue = message.client.queue.get(message.guild.id);
 
-      console.log(args[1]);
-
       const voiceChannel = message.member.voice.channel;
       if (!voiceChannel)
-        return message.channel.send(
-          "You need to be in a voice channel to play music!"
-        );
+        return message.channel.send("Phải vào voice channel mới mở được");
       const permissions = voiceChannel.permissionsFor(message.client.user);
       if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
         return message.channel.send(
@@ -55,7 +51,7 @@ module.exports = {
       } else {
         serverQueue.songs.push(song);
         return message.channel.send(
-          `${song.title} has been added to the queue!`
+          `**${song.title}** đã được thêm vào hàng chờ`
         );
       }
     } catch (error) {
