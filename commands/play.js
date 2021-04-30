@@ -9,7 +9,7 @@ module.exports = {
       const queue = message.client.queue;
       const serverQueue = message.client.queue.get(message.guild.id);
 
-      console.log(args);
+      console.log(args[1]);
 
       const voiceChannel = message.member.voice.channel;
       if (!voiceChannel)
