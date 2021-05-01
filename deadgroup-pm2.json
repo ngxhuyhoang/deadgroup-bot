@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "deadgroup",
+      "name": "deadgroup-bot",
       "script": "yarn",
       "args": "start"
     }
