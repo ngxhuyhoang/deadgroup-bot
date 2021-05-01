@@ -1,0 +1,16 @@
+name: deploy
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: 117.1.169.246
+          username: ubuntu
+          password: houzerd1
+          script: cd code/deadgroup-bot && git fetch origin && git merge origin/master && yarn install && pm2 restart deadgroup-bot
