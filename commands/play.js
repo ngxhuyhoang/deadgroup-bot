@@ -1,8 +1,9 @@
 const ytdl = require("ytdl-core");
+const ytsr = require("ytsr");
 
 module.exports = {
   name: "play",
-  description: "Play a song in your channel!",
+  description: "Phát nhạc",
   async execute(message) {
     try {
       const args = message.content.split(" ");
@@ -10,16 +11,23 @@ module.exports = {
       const serverQueue = message.client.queue.get(message.guild.id);
 
       const voiceChannel = message.member.voice.channel;
-      if (!voiceChannel)
+      if (!voiceChannel) {
         return message.channel.send("Phải vào voice channel mới mở được");
+      }
       const permissions = voiceChannel.permissionsFor(message.client.user);
       if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
-        return message.channel.send(
-          "I need the permissions to join and speak in your voice channel!"
-        );
+        return message.channel.send("Không có quyền không mở được");
       }
+      const keywords = message.content.substring(6);
+      const isUrl = keywords.startsWith("https");
 
-      const songInfo = await ytdl.getInfo(args[1]);
+      !isUrl && message.channel.send(`Đang tìm: **${keywords}**`);
+
+      const searchResult = await ytsr(keywords);
+
+      const songInfo = await ytdl.getInfo(
+        isUrl ? args[1] : searchResult.items[0].url
+      );
       const song = {
         title: songInfo.videoDetails.title,
         url: songInfo.videoDetails.video_url,

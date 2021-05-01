@@ -1,7 +1,6 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const Client = require("./client/Client");
-// const { prefix, token } = require("./config.json");
 
 const client = new Client();
 client.commands = new Discord.Collection();
@@ -16,8 +15,6 @@ for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
 }
-
-console.log(client.commands);
 
 client.once("ready", () => {
   console.log("Ready!");
@@ -40,13 +37,13 @@ client.on("message", async (message) => {
   if (!message.content.startsWith(prefix)) return;
 
   try {
-    if (commandName == "ban" || commandName == "userinfo") {
+    if (commandName === "ban" || commandName === "userinfo") {
       command.execute(message, client);
     } else {
       command.execute(message);
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
     message.reply("Không có lệnh này đâu");
   }
 });

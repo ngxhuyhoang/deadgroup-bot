@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon --inspect index.js"
   },
   "keywords": [
     "discord",
@@ -21,6 +22,10 @@
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "opusscript": "^0.0.8",
-    "ytdl-core": "^4.5.0"
+    "ytdl-core": "^4.5.0",
+    "ytsr": "^3.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
