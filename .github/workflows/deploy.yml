@@ -13,4 +13,4 @@ jobs:
           host: "117.1.169.246"
           username: "ubuntu"
           password: "houzerd1"
-          script: cd code/deadgroup-bot && git fetch origin && git merge origin/master && yarn install && pm2 restart deadgroup-bot
+          script: cd code/deadgroup-bot && git fetch origin && git merge origin/master && npm install && pm2 restart deadgroup-bot
