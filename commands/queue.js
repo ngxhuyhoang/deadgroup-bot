@@ -15,7 +15,7 @@ module.exports = {
     message.channel.send(
       serverQueue.songs
         .map((song, index) => {
-          return `(${index + 1})  ${song.title}\n`;
+          return `(${index + 1}) **[${song.platform}]  ${song.title}**\n`;
         })
         .join("")
     );

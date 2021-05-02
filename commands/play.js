@@ -38,6 +38,7 @@ module.exports = {
         song = {
           title: songInfo.videoDetails.title,
           url: ytdl(songInfo.videoDetails.video_url),
+          platform: 'YouTube'
         };
       }
 
@@ -47,6 +48,7 @@ module.exports = {
         song = {
           title: soundCloudSong.title,
           url: await soundCloudSong.downloadProgressive(),
+          platform: 'SoundCloud'
         };
       }
 
@@ -99,7 +101,6 @@ module.exports = {
     }
 
     const dispatcher = serverQueue.connection
-      // .play(ytdl(song.url))
       .play(song.url)
       .on("finish", () => {
         serverQueue.songs.shift();
@@ -107,6 +108,6 @@ module.exports = {
       })
       .on("error", (error) => message.reply(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    serverQueue.textChannel.send(`Đang phát: **${song.title}**`);
+    serverQueue.textChannel.send(`Đang phát: **[${song.platform}] ${song.title}**`);
   },
 };
