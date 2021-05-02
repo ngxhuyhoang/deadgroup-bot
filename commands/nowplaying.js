@@ -1,6 +1,6 @@
 module.exports = {
-  name: "np",
-  description: "Get the song that is playing.",
+  name: "nowplaying",
+  description: "Xem bài nhạc đang chạy",
   execute(message) {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!serverQueue) {

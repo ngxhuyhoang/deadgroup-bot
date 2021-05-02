@@ -18,10 +18,13 @@
   "license": "MIT",
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
+    "clorox": "^2.2.0",
     "discord.js": "^12.5.1",
-    "ffmpeg": "0.0.4",
+    "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "opusscript": "^0.0.8",
+    "soundcloud-downloader": "^1.0.0",
+    "soundcloud-scraper": "^4.0.3",
     "ytdl-core": "^4.5.0",
     "ytsr": "^3.5.0"
   },

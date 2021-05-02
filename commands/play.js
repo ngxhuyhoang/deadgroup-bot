@@ -1,5 +1,8 @@
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
+const SoundCloud = require("soundcloud-scraper");
+
+const soundCloudClient = new SoundCloud.Client();
 
 module.exports = {
   name: "play",
@@ -25,13 +28,27 @@ module.exports = {
 
       const searchResult = await ytsr(keywords);
 
-      const songInfo = await ytdl.getInfo(
-        isUrl ? args[1] : searchResult.items[0].url
-      );
-      const song = {
-        title: songInfo.videoDetails.title,
-        url: songInfo.videoDetails.video_url,
-      };
+      let songInfo = null;
+      let song = null;
+
+      if (!args[1].includes("soundcloud")) {
+        songInfo = await ytdl.getInfo(
+          isUrl ? args[1] : searchResult.items[0].url
+        );
+        song = {
+          title: songInfo.videoDetails.title,
+          url: ytdl(songInfo.videoDetails.video_url),
+        };
+      }
+
+      if (args[1].includes("soundcloud")) {
+        const soundCloudSong = await soundCloudClient.getSongInfo(args[1]);
+        songInfo = soundCloudSong;
+        song = {
+          title: soundCloudSong.title,
+          url: await soundCloudSong.downloadProgressive(),
+        };
+      }
 
       if (!serverQueue) {
         const queueContruct = {
@@ -74,18 +91,21 @@ module.exports = {
     const serverQueue = queue.get(message.guild.id);
 
     if (!song) {
-      serverQueue.voiceChannel.leave();
+      setTimeout(() => {
+        serverQueue.voiceChannel.leave();
+      }, 300_000);
       queue.delete(guild.id);
       return;
     }
 
     const dispatcher = serverQueue.connection
-      .play(ytdl(song.url))
+      // .play(ytdl(song.url))
+      .play(song.url)
       .on("finish", () => {
         serverQueue.songs.shift();
         this.play(message, serverQueue.songs[0]);
       })
-      .on("error", (error) => console.error(error));
+      .on("error", (error) => message.reply(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     serverQueue.textChannel.send(`Đang phát: **${song.title}**`);
   },
